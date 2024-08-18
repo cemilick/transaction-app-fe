@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 import Form from './components/Form'
 import TableTransaction from './components/TableTransaction'
 import axios from 'axios';
@@ -54,6 +55,11 @@ const App = () => {
 
   return (
     <div className="flex h-screen w-screen bg-gray-200">
+      <Helmet>
+        <title>Coding Collective - Technical Test 1</title>
+        <meta name="description" content="This is a React application for Coding Collective's technical test 1." />
+      </Helmet>
+
       {/* Sidebar */}
       <div className="w-1/6 bg-yellow-500 text-center">
         <h1 className="text-2xl font-bold text-white px-4 pt-4">Coding Collective</h1>
