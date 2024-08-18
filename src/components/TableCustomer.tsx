@@ -24,6 +24,9 @@ const TableCustomer: React.FC<ITableCustomer> = ({ data }) => {
                 <thead className="bg-gray-50">
                     <tr>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            No.
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Name
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -38,8 +41,9 @@ const TableCustomer: React.FC<ITableCustomer> = ({ data }) => {
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 text-gray-700">
-                    {tableData?.map((item: any) => (
+                    {tableData?.map((item: any, index: number) => (
                         <tr key={item.id}>
+                            <td className="px-6 py-4 whitespace-nowrap">{(index + 1) + ((currentPage - 1) * itemsPerPage)}</td>
                             <td className="px-6 py-4 whitespace-nowrap">{item.name}</td>
                             <td className="px-6 py-4 whitespace-nowrap">{item.email}</td>
                             <td className="px-6 py-4 whitespace-nowrap">{item.phone}</td>

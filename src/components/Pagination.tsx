@@ -13,8 +13,9 @@ const Pagination: React.FC<IPagination> = ({ handleChange, currentPage, itemsPer
         <div className="flex justify-center">
             <div className="flex justify-end mt-4">
                 <nav className="relative z-0 inline-flex shadow-sm">
-                    <button
+                    {currentPage > 1 && (<button
                         type="button"
+                        onClick={() => handleChange(currentPage - 1)}
                         className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                     >
                         <span className="sr-only">Previous</span>
@@ -31,37 +32,40 @@ const Pagination: React.FC<IPagination> = ({ handleChange, currentPage, itemsPer
                                 clipRule="evenodd"
                             />
                         </svg>
-                    </button>
+                    </button>)}
                     {Array.from(Array(Math.ceil(totalItems / itemsPerPage)).keys()).map((index) => (
                         <button
                             key={index}
                             onClick={() => handleChange(index + 1)}
                             type="button"
-                            className={`relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium ${currentPage === index + 1 ? 'text-indigo-600' : 'text-gray-700'} hover:bg-gray-50`}
+                            disabled={currentPage === index + 1}
+                            className={`relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium ${currentPage === index + 1 ? 'text-white bg-yellow-500' : 'text-gray-700 hover:bg-gray-50'}`}
                         >
                             {index + 1}
                         </button>
                     ))
                     }
-                    <button
-                        type="button"
-                        className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                    >
-                        <span className="sr-only">Next</span>
-                        <svg
-                            className="h-5 w-5"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            aria-hidden="true"
+                    {currentPage < Math.ceil(totalItems / itemsPerPage) && (
+                        <button
+                            type="button"
+                            onClick={() => handleChange(currentPage + 1)}
+                            className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                         >
-                            <path
-                                fillRule="evenodd"
-                                d="M9.293 16.707a1 1 0 010-1.414L12.586 11H4a1 1 0 110-2h8.586l-3.293-3.293a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </button>
+                            <span className="sr-only">Next</span>
+                            <svg
+                                className="h-5 w-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    d="M9.293 16.707a1 1 0 010-1.414L12.586 11H4a1 1 0 110-2h8.586l-3.293-3.293a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+                        </button>)}
                 </nav>
             </div>
         </div>
