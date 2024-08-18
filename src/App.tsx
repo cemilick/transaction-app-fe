@@ -89,14 +89,14 @@ const App = () => {
         {menu === 'deposit' && (
           <>
             <h2 className="text-2xl font-bold text-yellow-500 my-4">Deposit</h2>
-            <Form options={customers} />
+            <Form options={customers} type='deposit' />
           </>
         )}
 
         {menu === 'withdrawal' && (
           <>
             <h2 className="text-2xl font-bold text-yellow-500 my-4">Withdrawal</h2>
-            <Form options={customers} />
+            <Form options={customers} type='withdraw' />
           </>
         )}
 
