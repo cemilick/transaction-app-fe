@@ -1,10 +1,52 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Form from './components/Form'
 import TableTransaction from './components/TableTransaction'
+import axios from 'axios';
+import TableCustomer from './components/TableCustomer';
 
 const App = () => {
 
   const [menu, setMenu] = useState('deposit');
+  const [customers, setCustomers] = useState([]);
+  const [transaction, setTransaction] = useState([]);
+  const [customer, setCustomer] = useState([]);
+
+  const getOptions = async () => {
+    try {
+      const { data } = await axios.get('http://localhost:3000/customer')
+
+      if (menu == 'customer') {
+        setCustomer(data?.data)
+      } else {
+        setCustomers(data?.data?.map((customer: any) => ({
+          id: customer.id,
+          name: customer.name
+        })
+        ))
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const getHistory = async () => {
+    try {
+      const { data } = await axios.get('http://localhost:3000/transaction');
+      setTransaction(data?.data);
+
+      getOptions();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    if (menu === 'history') {
+      getHistory();
+    } else {
+      getOptions();
+    }
+  }, [menu])
 
   return (
     <div className="flex h-screen w-screen bg-gray-200">
@@ -32,6 +74,13 @@ const App = () => {
           >
             List of Transactions
           </li>
+          <li
+            className="px-4 py-2 text-lg font-bold hover:cursor-pointer hover:bg-yellow-300 hover:text-black"
+            onClick={() => setMenu('customer')}
+          >
+            List of Customers
+          </li>
+
         </ul>
       </div>
 
@@ -40,21 +89,28 @@ const App = () => {
         {menu === 'deposit' && (
           <>
             <h2 className="text-2xl font-bold text-yellow-500 my-4">Deposit</h2>
-            <Form />
+            <Form options={customers} />
           </>
         )}
 
         {menu === 'withdrawal' && (
           <>
             <h2 className="text-2xl font-bold text-yellow-500 my-4">Withdrawal</h2>
-            <Form />
+            <Form options={customers} />
           </>
         )}
 
         {menu === 'history' && (
           <>
             <h2 className="text-2xl font-bold text-yellow-500 my-4">List of Transactions</h2>
-            <TableTransaction />
+            <TableTransaction options={customers} data={transaction} />
+          </>
+        )}
+
+        {menu === 'customer' && (
+          <>
+            <h2 className="text-2xl font-bold text-yellow-500 my-4">List of Customers</h2>
+            <TableCustomer data={customer} />
           </>
         )}
 
