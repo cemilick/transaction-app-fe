@@ -20,22 +20,22 @@ const TableCustomer: React.FC<ITableCustomer> = ({ data }) => {
 
     return (
         <>
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-gray-200 text-center">
                 <thead className="bg-gray-50">
                     <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                             No.
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Name
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Email
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Phone
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs text-right font-medium text-gray-500 uppercase tracking-wider">
                             Balance
                         </th>
                     </tr>
@@ -44,10 +44,10 @@ const TableCustomer: React.FC<ITableCustomer> = ({ data }) => {
                     {tableData?.map((item: any, index: number) => (
                         <tr key={item.id}>
                             <td className="px-6 py-4 whitespace-nowrap">{(index + 1) + ((currentPage - 1) * itemsPerPage)}</td>
-                            <td className="px-6 py-4 whitespace-nowrap">{item.name}</td>
-                            <td className="px-6 py-4 whitespace-nowrap">{item.email}</td>
-                            <td className="px-6 py-4 whitespace-nowrap">{item.phone}</td>
-                            <td className="px-6 py-4 whitespace-nowrap">{item.Wallet.balance}</td>
+                            <td className="px-6 py-4 whitespace-nowrap">{item.name ?? '-'}</td>
+                            <td className="px-6 py-4 whitespace-nowrap">{item.email ?? '-'}</td>
+                            <td className="px-6 py-4 whitespace-nowrap">{item.phone ?? '-'}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right">{Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(item.Wallet.balance) ?? '-'}</td>
                         </tr>
                     ))}
                 </tbody>

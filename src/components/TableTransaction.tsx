@@ -7,11 +7,10 @@ interface ITableTransaction {
 }
 
 const TableTransaction: React.FC<ITableTransaction> = ({ options, data }) => {
-    const status: any = {
-        0: 'Pending',
-        1: 'Success',
-        2: 'Failed'
-    }
+    const status: any = [
+        { color: 'bg-yellow-500', text: 'Pending' },
+        { color: 'bg-green-500', text: 'Success' },
+        { color: 'bg-red-500', text: 'Failed' }];
 
     const [tableData, setTableData] = useState<any>([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -52,25 +51,25 @@ const TableTransaction: React.FC<ITableTransaction> = ({ options, data }) => {
                     ))}
                 </select>
             </div>
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-gray-200 text-center">
                 <thead className="bg-gray-50">
                     <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                             No.
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Customer
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Amount
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Type
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Status
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Date
                         </th>
 
@@ -83,8 +82,12 @@ const TableTransaction: React.FC<ITableTransaction> = ({ options, data }) => {
                             <td className="px-6 py-4 whitespace-nowrap">{item.Customer.name}</td>
                             <td className="px-6 py-4 whitespace-nowrap">{item.amount}</td>
                             <td className="px-6 py-4 whitespace-nowrap">{item.type}</td>
-                            <td className="px-6 py-4 whitespace-nowrap">{status?.[item?.type] ?? '-'}</td>
-                            <td className="px-6 py-4 whitespace-nowrap">{item.createdAt}</td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                                <div className={(status[item?.status]?.color ?? "bg-gray-500") + " text-gray-50 px-5 rounded-sm"}>
+                                    {status[item?.status]?.text ?? '-'}
+                                </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">{new Date(item.createdAt).toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'medium' })}</td>
                         </tr>
                     ))}
                 </tbody>

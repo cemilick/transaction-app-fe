@@ -41,12 +41,14 @@ const App = () => {
   }
 
   useEffect(() => {
-    if (menu === 'history') {
+    if (menu === 'list of transactions') {
       getHistory();
     } else {
       getOptions();
     }
   }, [menu])
+
+  const features = ['Deposit', 'Withdrawal', 'List of Transactions', 'List of Customers'];
 
   return (
     <div className="flex h-screen w-screen bg-gray-200">
@@ -54,38 +56,21 @@ const App = () => {
       <div className="w-1/6 bg-yellow-500 text-center">
         <h1 className="text-2xl font-bold text-white px-4 pt-4">Coding Collective</h1>
         <small className="text-sm font-semibold text-white px-4 text-center">Technical Test 1</small>
-        <h2 className="text-sm text-center font-semibold text-white px-4 bg-yellow-700 py-2 mt-5">Features</h2>
+        <h2 className="text-sm text-center font-semibold text-white px-4 bg-black py-2 mt-5">Features</h2>
         <ul className="py-2 text-left">
-          <li
-            className="px-4 py-2 text-lg font-bold hover:cursor-pointer hover:bg-yellow-300 hover:text-black"
-            onClick={() => setMenu('deposit')}
-          >
-            Deposit
-          </li>
-          <li
-            className="px-4 py-2 text-lg font-bold hover:cursor-pointer hover:bg-yellow-300 hover:text-black"
-            onClick={() => setMenu('withdrawal')}
-          >
-            Withdrawal
-          </li>
-          <li
-            className="px-4 py-2 text-lg font-bold hover:cursor-pointer hover:bg-yellow-300 hover:text-black"
-            onClick={() => setMenu('history')}
-          >
-            List of Transactions
-          </li>
-          <li
-            className="px-4 py-2 text-lg font-bold hover:cursor-pointer hover:bg-yellow-300 hover:text-black"
-            onClick={() => setMenu('customer')}
-          >
-            List of Customers
-          </li>
+          {features.map((feature, index) => (
+            <li
+              className={"px-4 py-2 text-lg font-bold " + (menu === feature.toLocaleLowerCase() ? ' bg-yellow-700 text-white' : 'hover:bg-yellow-300 hover:text-black hover:cursor-pointer')}
+              onClick={() => setMenu(feature.toLowerCase())}
+            >
+              {feature}
+            </li>))}
 
         </ul>
       </div>
 
       {/* Main Content */}
-      <div className="w-5/6 bg-white p-5">
+      <div className="w-5/6 bg-white py-5 px-10">
         {menu === 'deposit' && (
           <>
             <h2 className="text-2xl font-bold text-yellow-500 my-4">Deposit</h2>
@@ -100,14 +85,14 @@ const App = () => {
           </>
         )}
 
-        {menu === 'history' && (
+        {menu === 'list of transactions' && (
           <>
             <h2 className="text-2xl font-bold text-yellow-500 my-4">List of Transactions</h2>
             <TableTransaction options={customers} data={transaction} />
           </>
         )}
 
-        {menu === 'customer' && (
+        {menu === 'list of customers' && (
           <>
             <h2 className="text-2xl font-bold text-yellow-500 my-4">List of Customers</h2>
             <TableCustomer data={customer} />
