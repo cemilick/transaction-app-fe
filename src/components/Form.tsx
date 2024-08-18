@@ -15,11 +15,12 @@ const Form: React.FC<IForm> = ({ options, type }) => {
     const onSubmit = async (data: any) => {
         setLoading(true);
         try {
-            await axios.post('http://localhost:3000/transaction', {
+            const apiUrl = import.meta.env.VITE_API_URL;
+            await axios.post(`${apiUrl}/transaction`, {
                 customer_id: data.customer,
                 amount: data.amount,
                 type
-            })
+            });
             Swal.fire({
                 icon: 'success',
                 title: 'Success',

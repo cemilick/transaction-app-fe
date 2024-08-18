@@ -13,9 +13,10 @@ const App = () => {
 
   const getOptions = async () => {
     try {
-      const { data } = await axios.get('http://localhost:3000/customer')
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const { data } = await axios.get(`${apiUrl}/customer`)
 
-      if (menu == 'customer') {
+      if (menu == 'list of customers') {
         setCustomer(data?.data)
       } else {
         setCustomers(data?.data?.map((customer: any) => ({
@@ -31,7 +32,8 @@ const App = () => {
 
   const getHistory = async () => {
     try {
-      const { data } = await axios.get('http://localhost:3000/transaction');
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const { data } = await axios.get(`${apiUrl}/transaction`);
       setTransaction(data?.data);
 
       getOptions();
